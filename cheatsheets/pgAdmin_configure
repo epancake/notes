@@ -1,0 +1,22 @@
+How to Install and Configure pgAdmin to connect to Databases on Heroku
+
+1) Download and Install pgAdmin from https://www.pgadmin.org/download/.
+
+2) Get Heroku DB credentials.
+
+Run heroku pg:credentials:url DATABASE_URL --app th-portal-staging
+Note: For PRs, change the app
+You should see heroku return a connection string. You will use values in this string to set up pgAdmin.
+3) In pgAdmin, click Add Server.
+
+Set Name to something useful, such as THStaging.
+Click on the Connection tab.
+Copy the host value from the Heroku connection string to the Host name field.
+Copy the Port.
+Copy the dbname value to the Maintenance database field.
+Copy the user value to Username.
+Copy the password value to Password. If you don't see the Password field here, then you will be prompted to enter it the first time you connect to the database.
+Click on the SSL tab.
+Set the SSL mode to Require.
+Click Save.
+4) Verify the connection is working. You should be able to run queries against the tables.

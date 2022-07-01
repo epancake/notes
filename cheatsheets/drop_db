@@ -1,0 +1,17 @@
+In times of turmoil there may be a need to drop your local database. For instance, if you are working on a new feature that has migrations, and you want to switch back to the develop branch or to another feature branch. In this case you may want to drop your db and just restore it from its original state.
+
+Sometimes, this can be as easy as following the pg_restore directions in the readme, proceeded by rake drob:db and rake create:db. But often, you will get an error that this is not allowed because you are currently connected to the db. Here is a way out.
+
+Connect to a different db: psql -h localhost postgres emilypancake. In this command, postgres is the name of a db, and emilypancake is the username. If you don't know if you have the postgres db you can look by running psql and then running \list. exit before running the command to connect to a different db.
+UPDATE pg_database SET datallowconn = 'false' WHERE datname = 'th-api-development'; (single quotes is important)
+SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'th-api-development';
+DROP DATABASE "th-api-development"; (double quotes are important)
+UPDATE pg_database SET datallowconn = 'true' WHERE datname = 'th-api-development'; (single quotes is important)
+exit
+Run these commands to reset the ENV variables for your local environment:
+export TH_DB_USERNAME=<your system username>
+export TH_DB_DEV=th-api-development
+export TH_DB_TEST=th-api-test
+export TH_DB_PASSWORD=<your system password>
+rake db:create && pg_restore -j 8 -v --no-acl --no-owner -d $TH_DB_DEV ~/Documents/code/6389abb3-bf46-4623-9b0a-52162e3f9ca0 Replace my file path with the path to your original db.
+rake db:migrate

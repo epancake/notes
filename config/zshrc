@@ -1,0 +1,156 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/emilypancake/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="robbyrussell"
+
+export TH_DB_USERNAME=
+export TH_DB_DEV=
+export TH_DB_TEST=
+export TH_DB_PASSWORD=
+export GOOGLE_API_KEY=
+
+setup_sendgrid_pr () {
+  local SENDGRID_USERNAME=$(command heroku config:get SENDGRID_USERNAME --app th-portal-staging)
+  local SENDGRID_PASSWORD=$(command heroku config:get SENDGRID_PASSWORD --app th-portal-staging)
+
+  heroku config:set SENDGRID_USERNAME=$SENDGRID_USERNAME SENDGRID_PASSWORD=$SENDGRID_PASSWORD --app th-portal-staging-pr-$1
+}
+
+setup_netsuite_pr () {
+  local NETSUITE_CONSUMER_KEY=$(command heroku config:get NETSUITE_CONSUMER_KEY --app th-portal-staging)
+  local NETSUITE_CONSUMER_SECRET=$(command heroku config:get NETSUITE_CONSUMER_SECRET --app th-portal-staging)
+  local NETSUITE_TOKEN_ID=$(command heroku config:get NETSUITE_TOKEN_ID --app th-portal-staging)
+  local NETSUITE_TOKEN_SECRET=$(command heroku config:get NETSUITE_TOKEN_SECRET --app th-portal-staging)
+  local NETSUITE_ACCOUNT=$(command heroku config:get NETSUITE_ACCOUNT --app th-portal-staging)
+  local NETSUITE_WSDL=$(command heroku config:get NETSUITE_WSDL --app th-portal-staging)
+  local NETSUITE_ROLE=$(command heroku config:get NETSUITE_ROLE --app th-portal-staging)
+  local NETSUITE_API_VERSION=$(command heroku config:get NETSUITE_API_VERSION --app th-portal-staging)
+
+  heroku config:set NETSUITE_CONSUMER_KEY=$NETSUITE_CONSUMER_KEY NETSUITE_CONSUMER_SECRET=$NETSUITE_CONSUMER_SECRET NETSUITE_TOKEN_ID=$NETSUITE_TOKEN_ID NETSUITE_TOKEN_SECRET=$NETSUITE_TOKEN_SECRET NETSUITE_ACCOUNT=$NETSUITE_ACCOUNT NETSUITE_WSDL=$NETSUITE_WSDL NETSUITE_ROLE=$NETSUITE_ROLE NETSUITE_API_VERSION=$NETSUITE_API_VERSION --app th-portal-staging-pr-$1
+}
+
+setup_salesforce_pr () {
+  local SF_USERNAME=$(command heroku config:get SF_USERNAME --app th-portal-staging)
+  local SF_PASSWORD=$(command heroku config:get SF_PASSWORD --app th-portal-staging)
+  local SF_SECURITY_TOKEN=$(command heroku config:get SF_SECURITY_TOKEN --app th-portal-staging)
+  local SALESFORCE_HOST=$(command heroku config:get SALESFORCE_HOST --app th-portal-staging)
+  local SF_CONSUMER_KEY=$(command heroku config:get SF_CONSUMER_KEY --app th-portal-staging)
+  local SF_CONSUMER_SECRET=$(command heroku config:get SF_CONSUMER_SECRET --app th-portal-staging)
+  local SF_API_VERSION=$(command heroku config:get SF_API_VERSION --app th-portal-staging)
+
+  heroku config:set SF_USERNAME=$SF_USERNAME SF_PASSWORD=$SF_PASSWORD SF_SECURITY_TOKEN=$SF_SECURITY_TOKEN SALESFORCE_HOST=$SALESFORCE_HOST SF_CONSUMER_KEY=$SF_CONSUMER_KEY SF_CONSUMER_SECRET=$SF_CONSUMER_SECRET SF_API_VERSION=$SF_API_VERSION --app th-portal-staging-pr-$1
+}
+
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+alias co='git checkout'
+alias cob='git checkout -b'
+alias startfe='npm install && gulp build && npm start'
+alias watchfe='npm run webpack-watch'
+alias stagingc='heroku run rails c --app th-portal-staging'
+alias stagingcs='heroku run rails c --sandbox --app th-portal-staging'
+alias prodc='heroku run rails c --app th-portal-prod'
+alias prodcsand='heroku run rails c --sandbox --app th-portal-prod'
+alias ga='git add . && git revert Gemfile.lock'
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+[[ -s $HOME/.nvm/nvm.sh ]] && . $HOME/.nvm/nvm.sh  # This loads NVM
+
+PATH="/Library/PostgreSQL/11/bin:$PATH"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
